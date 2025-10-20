@@ -5,7 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Certificates - Panth Sutaria</title>
-    <meta name="description" content="Explore Panth Sutaria's collection of 29+ certificates in programming, competitions, and professional development.">
+    <meta name="description"
+        content="Explore Panth Sutaria's collection of 29+ certificates in programming, competitions, and professional development.">
     <link rel="icon" href="../assets/icon/P.png" type="image/png" />
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
@@ -13,7 +14,33 @@
 
 <body>
     <!-- Navigation -->
-    <div id="navbar"></div>
+    <div class="navigation_bar">
+        <nav class="navbar">
+            <div class="navbar-nav">
+                <li class="text_navbar"><a href="../index.html">Home <span
+                            class="material-symbols-outlined">home</span></a></li>
+                <li class="text_navbar"><a href="../static/aboutme.html">About <span
+                            class="material-symbols-outlined">person</span></a></li>
+            </div>
+
+            <a href="../index.html">
+                <img src="../assets/icon/P.png" alt="Panth Sutaria Logo" class="navbar-logo">
+            </a>
+
+            <div class="navbar-nav">
+                <li class="text_navbar"><a href="../static/project.html">Projects <span
+                            class="material-symbols-outlined">work_history</span></a></li>
+                <li class="text_navbar"><a href="../static/certificates.html">Certificates <span
+                            class="material-symbols-outlined">license</span></a></li>
+            </div>
+
+            <div class="toggle">
+                <a href="#" onclick="window.themeManager?.toggle(); return false;">
+                    <span class="material-symbols-outlined theme-toggle">dark_mode</span>
+                </a>
+            </div>
+        </nav>
+    </div>
 
     <div class="body">
         <!-- Hero Section -->
@@ -31,22 +58,26 @@
         <section class="section">
             <div class="grid grid-4">
                 <div class="card animate-on-scroll" style="text-align: center;">
-                    <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;">code</span>
+                    <span class="material-symbols-outlined"
+                        style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;">code</span>
                     <h3>Technical</h3>
                     <p>Programming & Web Development</p>
                 </div>
                 <div class="card animate-on-scroll" style="text-align: center;">
-                    <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;">emoji_events</span>
+                    <span class="material-symbols-outlined"
+                        style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;">emoji_events</span>
                     <h3>Competition</h3>
                     <p>Hackathons & Contests</p>
                 </div>
                 <div class="card animate-on-scroll" style="text-align: center;">
-                    <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;">school</span>
+                    <span class="material-symbols-outlined"
+                        style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;">school</span>
                     <h3>Academic</h3>
                     <p>Excellence & Merit Awards</p>
                 </div>
                 <div class="card animate-on-scroll" style="text-align: center;">
-                    <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;">work</span>
+                    <span class="material-symbols-outlined"
+                        style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;">work</span>
                     <h3>Professional</h3>
                     <p>Industry Recognition</p>
                 </div>
@@ -56,7 +87,7 @@
         <!-- Certificate Filters -->
         <section class="section" style="background-color: var(--bg-secondary);">
             <h2 class="section-title animate-on-scroll">Certificate Gallery</h2>
-            
+
             <div class="certificate-filters animate-on-scroll">
                 <button class="filter-btn active" data-filter="all">All Certificates</button>
                 <button class="filter-btn" data-filter="Technical">Technical</button>
@@ -79,52 +110,61 @@
             <div class="grid grid-2">
                 <div class="card animate-on-scroll">
                     <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                        <span class="material-symbols-outlined" style="font-size: 2.5rem; color: var(--primary-color); margin-right: 1rem;">rocket_launch</span>
+                        <span class="material-symbols-outlined"
+                            style="font-size: 2.5rem; color: var(--primary-color); margin-right: 1rem;">rocket_launch</span>
                         <div>
                             <h3>ISRO 2025 Certificate</h3>
                             <p style="color: var(--text-secondary);">Space Technology Excellence</p>
                         </div>
                     </div>
-                    <p>Recognized for outstanding performance in space technology and innovation programs by the Indian Space Research Organisation.</p>
+                    <p>Recognized for outstanding performance in space technology and innovation programs by the Indian
+                        Space Research Organisation.</p>
                 </div>
-                
+
                 <div class="card animate-on-scroll">
                     <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                        <span class="material-symbols-outlined" style="font-size: 2.5rem; color: var(--primary-color); margin-right: 1rem;">emoji_events</span>
+                        <span class="material-symbols-outlined"
+                            style="font-size: 2.5rem; color: var(--primary-color); margin-right: 1rem;">emoji_events</span>
                         <div>
                             <h3>Hackathon Participant</h3>
                             <p style="color: var(--text-secondary);">Multiple Competition Experience</p>
                         </div>
                     </div>
-                    <p>Participated in Space India Hackathon and Royal Hackathon, demonstrating exceptional problem-solving and innovation skills through collaborative development.</p>
+                    <p>Participated in Space India Hackathon and Royal Hackathon, demonstrating exceptional
+                        problem-solving and innovation skills through collaborative development.</p>
                 </div>
-                
+
                 <div class="card animate-on-scroll">
                     <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                        <span class="material-symbols-outlined" style="font-size: 2.5rem; color: var(--primary-color); margin-right: 1rem;">code</span>
+                        <span class="material-symbols-outlined"
+                            style="font-size: 2.5rem; color: var(--primary-color); margin-right: 1rem;">code</span>
                         <div>
                             <h3>MEAN Stack Certified</h3>
                             <p style="color: var(--text-secondary);">Full Stack Development</p>
                         </div>
                     </div>
-                    <p>Comprehensive certification in MongoDB, Express.js, Angular, and Node.js for modern web application development.</p>
+                    <p>Comprehensive certification in MongoDB, Express.js, Angular, and Node.js for modern web
+                        application development.</p>
                 </div>
-                
+
                 <div class="card animate-on-scroll">
                     <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                        <span class="material-symbols-outlined" style="font-size: 2.5rem; color: var(--primary-color); margin-right: 1rem;">school</span>
+                        <span class="material-symbols-outlined"
+                            style="font-size: 2.5rem; color: var(--primary-color); margin-right: 1rem;">school</span>
                         <div>
                             <h3>Academic Excellence</h3>
                             <p style="color: var(--text-secondary);">Outstanding Performance</p>
                         </div>
                     </div>
-                    <p>Multiple merit certificates and academic excellence awards for consistent high performance in studies.</p>
+                    <p>Multiple merit certificates and academic excellence awards for consistent high performance in
+                        studies.</p>
                 </div>
             </div>
         </section>
 
         <!-- Call to Action -->
-        <section class="section" style="text-align: center; background: var(--gradient); color: white; margin: 0; padding: 4rem 2rem;">
+        <section class="section"
+            style="text-align: center; background: var(--gradient); color: white; margin: 0; padding: 4rem 2rem;">
             <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Impressed by My Journey?</h2>
             <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
                 Let's discuss how my skills and experience can contribute to your next project.
@@ -143,7 +183,23 @@
     </div>
 
     <!-- Footer -->
-    <div id="footer"></div>
+    <div class="footer">
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://github.com/Panth0102" target="_blank" title="GitHub">
+                    <span class="material-symbols-outlined">code</span>
+                </a>
+                <a href="https://www.linkedin.com/in/panth-sutaria" target="_blank" title="LinkedIn">
+                    <span class="material-symbols-outlined">work</span>
+                </a>
+                <a href="mailto:panthsutaria30@gmail.com" title="Email">
+                    <span class="material-symbols-outlined">email</span>
+                </a>
+            </div>
+            <p>&copy; 2025 Panth Sutaria. All rights reserved.</p>
+            <p>Built with ❤️ using HTML, CSS & JavaScript</p>
+        </div>
+    </div>
 
     <script src="../js/main.js"></script>
     <script>
@@ -156,7 +212,7 @@
                 const footer = temp.querySelector('.footer');
                 if (navbar) document.getElementById('navbar').appendChild(navbar);
                 if (footer) document.getElementById('footer').appendChild(footer);
-                
+
                 // Fix navigation paths after loading
                 setTimeout(() => {
                     if (typeof fixNavigationPaths === 'function') {
@@ -166,4 +222,5 @@
             });
     </script>
 </body>
+
 </html>

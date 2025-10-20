@@ -13,7 +13,29 @@
 
 <body>
     <!-- Navigation -->
-    <div id="navbar"></div>
+    <div class="navigation_bar">
+        <nav class="navbar">
+            <div class="navbar-nav">
+                <li class="text_navbar"><a href="index.html">Home <span class="material-symbols-outlined">home</span></a></li>
+                <li class="text_navbar"><a href="static/aboutme.html">About <span class="material-symbols-outlined">person</span></a></li>
+            </div>
+            
+            <a href="index.html">
+                <img src="assets/icon/P.png" alt="Panth Sutaria Logo" class="navbar-logo">
+            </a>
+            
+            <div class="navbar-nav">
+                <li class="text_navbar"><a href="static/project.html">Projects <span class="material-symbols-outlined">work_history</span></a></li>
+                <li class="text_navbar"><a href="static/certificates.html">Certificates <span class="material-symbols-outlined">license</span></a></li>
+            </div>
+            
+            <div class="toggle">
+                <a href="#" onclick="window.themeManager?.toggle(); return false;">
+                    <span class="material-symbols-outlined theme-toggle">dark_mode</span>
+                </a>
+            </div>
+        </nav>
+    </div>
 
     <div class="body">
         <!-- Hero Section -->
@@ -122,27 +144,24 @@
     </div>
 
     <!-- Footer -->
-    <div id="footer"></div>
+    <div class="footer">
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://github.com/Panth0102" target="_blank" title="GitHub">
+                    <span class="material-symbols-outlined">code</span>
+                </a>
+                <a href="https://www.linkedin.com/in/panth-sutaria" target="_blank" title="LinkedIn">
+                    <span class="material-symbols-outlined">work</span>
+                </a>
+                <a href="mailto:panthsutaria30@gmail.com" title="Email">
+                    <span class="material-symbols-outlined">email</span>
+                </a>
+            </div>
+            <p>&copy; 2025 Panth Sutaria. All rights reserved.</p>
+            <p>Built with ❤️ using HTML, CSS & JavaScript</p>
+        </div>
+    </div>
 
     <script src="js/main.js"></script>
-    <script>
-        fetch('layout/layout.html')
-            .then(res => res.text())
-            .then(html => {
-                const temp = document.createElement('div');
-                temp.innerHTML = html;
-                const navbar = temp.querySelector('.navigation_bar');
-                const footer = temp.querySelector('.footer');
-                if (navbar) document.getElementById('navbar').appendChild(navbar);
-                if (footer) document.getElementById('footer').appendChild(footer);
-                
-                // Fix navigation paths after loading
-                setTimeout(() => {
-                    if (typeof fixNavigationPaths === 'function') {
-                        fixNavigationPaths();
-                    }
-                }, 100);
-            });
-    </script>
 </body>
-</html>""
+</html>
