@@ -200,11 +200,23 @@ function fixNavigationPaths() {
     const navLinks = document.querySelectorAll('.navbar a[href]');
     navLinks.forEach(link => {
         const href = link.getAttribute('href');
-        if (href && !href.startsWith('http') && !href.startsWith('#')) {
-            if (isSubPage && !href.startsWith('../')) {
-                link.setAttribute('href', '../' + href);
-            } else if (!isSubPage && href.startsWith('../')) {
-                link.setAttribute('href', href.replace('../', ''));
+        if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+            if (isSubPage) {
+                // For sub pages, ensure paths start with ../
+                if (!href.startsWith('../')) {
+                    if (href === 'index.html') {
+                        link.setAttribute('href', '../index.html');
+                    } else if (href.startsWith('static/')) {
+                        link.setAttribute('href', '../' + href);
+                    } else {
+                        link.setAttribute('href', '../' + href);
+                    }
+                }
+            } else {
+                // For root page, remove ../ if present
+                if (href.startsWith('../')) {
+                    link.setAttribute('href', href.replace('../', ''));
+                }
             }
         }
     });
@@ -213,12 +225,19 @@ function fixNavigationPaths() {
     const logo = document.querySelector('.navbar-logo');
     if (logo) {
         const currentSrc = logo.getAttribute('src');
-        if (isSubPage && !currentSrc.startsWith('../')) {
-            logo.setAttribute('src', '../' + currentSrc);
-        } else if (!isSubPage && currentSrc.startsWith('../')) {
-            logo.setAttribute('src', currentSrc.replace('../', ''));
+        if (isSubPage) {
+            if (!currentSrc.startsWith('../')) {
+                logo.setAttribute('src', '../' + currentSrc);
+            }
+        } else {
+            if (currentSrc.startsWith('../')) {
+                logo.setAttribute('src', currentSrc.replace('../', ''));
+            }
         }
     }
+    
+    // Debug log
+    console.log('Navigation paths fixed for:', isSubPage ? 'sub page' : 'root page');
 }
 
 // Initialize everything when DOM is loaded
