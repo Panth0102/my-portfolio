@@ -15,26 +15,50 @@
     <!-- Navigation -->
     <div class="navigation_bar">
         <nav class="navbar">
-            <div class="navbar-nav">
-                <li class="text_navbar"><a href="index.html">Home <span class="material-symbols-outlined">home</span></a></li>
-                <li class="text_navbar"><a href="static/aboutme.html">About <span class="material-symbols-outlined">person</span></a></li>
-            </div>
-            
-            <a href="index.html">
+            <!-- Left: Brand/Logo -->
+            <a href="index.html" class="navbar-brand">
                 <img src="assets/icon/P.png" alt="Panth Sutaria Logo" class="navbar-logo">
             </a>
             
+            <!-- Center: Navigation Links -->
             <div class="navbar-nav">
+                <li class="text_navbar"><a href="index.html">Home <span class="material-symbols-outlined">home</span></a></li>
+                <li class="text_navbar"><a href="static/aboutme.html">About <span class="material-symbols-outlined">person</span></a></li>
                 <li class="text_navbar"><a href="static/project.html">Projects <span class="material-symbols-outlined">work_history</span></a></li>
                 <li class="text_navbar"><a href="static/certificates.html">Certificates <span class="material-symbols-outlined">license</span></a></li>
             </div>
             
-            <div class="toggle">
-                <a href="#" onclick="window.themeManager?.toggle(); return false;">
-                    <span class="material-symbols-outlined theme-toggle">dark_mode</span>
-                </a>
+            <!-- Right: Theme Toggle & Mobile Menu -->
+            <div class="navbar-right">
+                <div class="toggle">
+                    <a href="#" onclick="window.themeManager?.toggle(); return false;">
+                        <span class="material-symbols-outlined theme-toggle">dark_mode</span>
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Toggle -->
+                <div class="mobile-menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </nav>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <div class="navbar-nav">
+                <li class="text_navbar"><a href="index.html">Home <span class="material-symbols-outlined">home</span></a></li>
+                <li class="text_navbar"><a href="static/aboutme.html">About <span class="material-symbols-outlined">person</span></a></li>
+                <li class="text_navbar"><a href="static/project.html">Projects <span class="material-symbols-outlined">work_history</span></a></li>
+                <li class="text_navbar"><a href="static/certificates.html">Certificates <span class="material-symbols-outlined">license</span></a></li>
+                <li class="text_navbar">
+                    <a href="#" onclick="window.themeManager?.toggle(); return false;">
+                        Theme <span class="material-symbols-outlined theme-toggle">dark_mode</span>
+                    </a>
+                </li>
+            </div>
+        </div>
     </div>
 
     <div class="body">

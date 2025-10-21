@@ -85,15 +85,34 @@ class CertificateGallery {
             ? this.certificates 
             : this.certificates.filter(cert => cert.category === filter);
 
+        // Determine the correct path based on current page location
+        const isSubPage = window.location.pathname.includes('/static/');
+        const basePath = isSubPage ? '../' : '';
+
         container.innerHTML = filteredCerts.map(cert => `
             <div class="certificate-card" data-category="${cert.category}">
-                <div class="certificate-preview">
-                    <img src="../assets/Certificates/${cert.file}" alt="${cert.name}" loading="lazy">
+                <div class="certificate-preview" style="position: relative;">
+                    <img src="${basePath}assets/Certificates/${cert.file}" 
+                         alt="${cert.name}" 
+                         loading="lazy"
+                         onload="this.style.opacity='1'; if(this.parentElement.querySelector('.loading-placeholder')) this.parentElement.querySelector('.loading-placeholder').style.display='none';"
+                         onerror="this.style.display='none'; this.parentElement.querySelector('.pdf-preview').style.display='flex'; if(this.parentElement.querySelector('.loading-placeholder')) this.parentElement.querySelector('.loading-placeholder').style.display='none';"
+                         style="opacity: 0; transition: opacity 0.3s ease;">
+                    <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--text-secondary);">
+                        <span class="material-symbols-outlined" style="font-size: 2rem; animation: spin 1s linear infinite;">refresh</span>
+                    </div>
+                    <div class="pdf-preview" style="display: none;">
+                        <div class="pdf-container">
+                            <span class="material-symbols-outlined pdf-icon">description</span>
+                            <p class="pdf-label">Certificate</p>
+                            <p style="font-size: 0.75rem; margin-top: 0.5rem; opacity: 0.8;">${cert.name}</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="certificate-info">
                     <h3>${cert.name}</h3>
                     <span class="category-tag">${cert.category}</span>
-                    <a href="../assets/Certificates/${cert.file}" target="_blank" class="view-btn">
+                    <a href="${basePath}assets/Certificates/${cert.file}" target="_blank" class="view-btn">
                         <span class="material-symbols-outlined">zoom_in</span>
                         View Certificate
                     </a>
@@ -236,12 +255,53 @@ function fixNavigationPaths() {
         }
     }
     
-    // Debug log
-    console.log('Navigation paths fixed for:', isSubPage ? 'sub page' : 'root page');
+
 }
+
+// Mobile Menu Toggle
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    
+    if (mobileMenu && menuToggle) {
+        const isCurrentlyActive = mobileMenu.classList.contains('active');
+        
+        if (isCurrentlyActive) {
+            // Close the menu
+            mobileMenu.classList.remove('active');
+            menuToggle.classList.remove('active');
+        } else {
+            // Open the menu
+            mobileMenu.classList.add('active');
+            menuToggle.classList.add('active');
+        }
+    }
+}
+
+// Close mobile menu when clicking on a link
+function closeMobileMenu() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    
+    if (mobileMenu && menuToggle) {
+        mobileMenu.classList.remove('active');
+        menuToggle.classList.remove('active');
+    }
+}
+
+// Make sure the function is globally accessible
+window.toggleMobileMenu = toggleMobileMenu;
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Ensure mobile menu starts in closed state
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    if (mobileMenu && menuToggle) {
+        mobileMenu.classList.remove('active');
+        menuToggle.classList.remove('active');
+    }
+    
     // Initialize theme manager
     window.themeManager = new ThemeManager();
     
@@ -251,7 +311,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize certificate gallery if on certificates page
     if (document.getElementById('certificates-grid')) {
         window.certificateGallery = new CertificateGallery();
-        window.certificateGallery.render('certificates-grid');
+        
+        // Add a small delay to ensure DOM is ready
+        setTimeout(() => {
+            window.certificateGallery.render('certificates-grid');
+        }, 100);
         
         // Setup category filters
         const filterButtons = document.querySelectorAll('.filter-btn');
@@ -275,4 +339,33 @@ document.addEventListener('DOMContentLoaded', function() {
             'Continuous Learner'
         ]);
     }
+    
+    // Add click event listeners to mobile menu toggle
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleMobileMenu();
+        });
+    }
+    
+    // Add click event listeners to mobile menu links
+    const mobileMenuLinks = document.querySelectorAll('.mobile-menu .text_navbar a');
+    mobileMenuLinks.forEach(link => {
+        link.addEventListener('click', closeMobileMenu);
+    });
+    
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const navbar = document.querySelector('.navbar');
+        
+        if (mobileMenu && menuToggle && navbar) {
+            if (!navbar.contains(event.target) && mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        }
+    });
 });
