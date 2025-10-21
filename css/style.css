@@ -380,6 +380,11 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
+/* Certificate Grid - Default Desktop: 3 columns */
+#certificates-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
 .grid-4 {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
@@ -622,6 +627,37 @@ body {
 }
 
 /* Responsive Design */
+
+/* Large Desktop: 4 columns for certificates */
+@media (min-width: 1200px) {
+    #certificates-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Tablet/iPad: 2 columns */
+@media (max-width: 1024px) and (min-width: 769px) {
+    #certificates-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Medium tablets (iPad Mini, etc.): 2 columns */
+@media (max-width: 820px) and (min-width: 769px) {
+    #certificates-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile/Phone: 1 column */
 @media (max-width: 768px) {
     .navbar {
         padding: 0 1rem;
@@ -667,24 +703,52 @@ body {
     }
 
     .certificate-preview {
-        height: 180px;
+        height: 200px;
+        min-height: 200px;
+        background-color: var(--bg-secondary);
+        border-radius: 0.5rem 0.5rem 0 0;
     }
 
     .certificate-preview img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
         background-color: var(--bg-secondary);
         padding: 0.5rem;
         box-sizing: border-box;
+        border-radius: 0.5rem 0.5rem 0 0;
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
     .certificate-card {
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
+        width: 100%;
+        max-width: 100%;
     }
 
     .certificate-info {
         padding: 1rem;
+    }
+
+    /* Phone: Single column for certificates */
+    #certificates-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+    
+    .grid-3 {
+        grid-template-columns: 1fr;
+    }
+    
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Show mobile load button only on mobile */
+    #mobile-load-button {
+        display: block !important;
     }
 }
 
@@ -730,10 +794,28 @@ body {
     }
 
     .grid-4 {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
     }
 
     .certificate-preview {
-        height: 150px;
+        height: 180px;
+        min-height: 180px;
+    }
+
+    .certificate-preview img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+        padding: 0.25rem;
+    }
+
+    /* Force single column on very small screens */
+    #certificates-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .certificate-card {
+        width: 100%;
+        max-width: 100%;
     }
 }

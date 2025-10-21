@@ -30,8 +30,8 @@ class ThemeManager {
         if (logo) {
             const isSubPage = window.location.pathname.includes('/static/');
             const basePath = isSubPage ? '../' : '';
-            logo.src = this.currentTheme === 'light' 
-                ? `${basePath}assets/icon/P.png` 
+            logo.src = this.currentTheme === 'light'
+                ? `${basePath}assets/icon/P.png`
                 : `${basePath}assets/icon/P-2.png`;
         }
     }
@@ -78,47 +78,100 @@ class CertificateGallery {
     }
 
     render(containerId, filter = 'all') {
+        console.log('Certificate render called with filter:', filter);
         const container = document.getElementById(containerId);
-        if (!container) return;
+        if (!container) {
+            console.error('Container not found:', containerId);
+            return;
+        }
 
-        const filteredCerts = filter === 'all' 
-            ? this.certificates 
+        const filteredCerts = filter === 'all'
+            ? this.certificates
             : this.certificates.filter(cert => cert.category === filter);
+
+        console.log('Filtered certificates count:', filteredCerts.length, 'Total certificates:', this.certificates.length);
 
         // Determine the correct path based on current page location
         const isSubPage = window.location.pathname.includes('/static/');
         const basePath = isSubPage ? '../' : '';
 
-        container.innerHTML = filteredCerts.map(cert => `
-            <div class="certificate-card" data-category="${cert.category}">
-                <div class="certificate-preview" style="position: relative;">
-                    <img src="${basePath}assets/Certificates/${cert.file}" 
-                         alt="${cert.name}" 
-                         loading="lazy"
-                         onload="this.style.opacity='1'; if(this.parentElement.querySelector('.loading-placeholder')) this.parentElement.querySelector('.loading-placeholder').style.display='none';"
-                         onerror="this.style.display='none'; this.parentElement.querySelector('.pdf-preview').style.display='flex'; if(this.parentElement.querySelector('.loading-placeholder')) this.parentElement.querySelector('.loading-placeholder').style.display='none';"
-                         style="opacity: 0; transition: opacity 0.3s ease;">
-                    <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--text-secondary);">
-                        <span class="material-symbols-outlined" style="font-size: 2rem; animation: spin 1s linear infinite;">refresh</span>
-                    </div>
-                    <div class="pdf-preview" style="display: none;">
-                        <div class="pdf-container">
-                            <span class="material-symbols-outlined pdf-icon">description</span>
-                            <p class="pdf-label">Certificate</p>
-                            <p style="font-size: 0.75rem; margin-top: 0.5rem; opacity: 0.8;">${cert.name}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="certificate-info">
-                    <h3>${cert.name}</h3>
-                    <span class="category-tag">${cert.category}</span>
-                    <a href="${basePath}assets/Certificates/${cert.file}" target="_blank" class="view-btn">
-                        <span class="material-symbols-outlined">zoom_in</span>
-                        View Certificate
-                    </a>
-                </div>
-            </div>
-        `).join('');
+        console.log('Path info - isSubPage:', isSubPage, 'basePath:', basePath);
+
+        // Show loading state first
+        container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">Loading certificates...</div>';
+
+        // Use setTimeout to ensure DOM is ready and improve mobile compatibility
+        setTimeout(() => {
+            // Clear container first
+            container.innerHTML = '';
+
+            // Create certificates using DOM manipulation for better mobile compatibility
+            filteredCerts.forEach((cert, index) => {
+                const imagePath = `${basePath}assets/Certificates/${cert.file}`;
+
+                // Create card container
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'certificate-card';
+                cardDiv.setAttribute('data-category', cert.category);
+                cardDiv.style.cssText = 'width: 100%; margin-bottom: 1.5rem; background: white; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;';
+
+                // Create image container
+                const imageContainer = document.createElement('div');
+                imageContainer.style.cssText = 'height: 200px; width: 100%; background-color: #f8f9fa; position: relative; overflow: hidden;';
+
+                // Create image element
+                const img = document.createElement('img');
+                img.src = imagePath;
+                img.alt = cert.name;
+                img.style.cssText = 'width: 100%; height: 100%; object-fit: contain; display: block; background: white;';
+
+                img.onload = function () {
+                    console.log(`Image ${index} loaded successfully: ${cert.file}`);
+                    this.style.opacity = '1';
+                };
+
+                img.onerror = function () {
+                    console.log(`Image ${index} failed to load: ${cert.file}`);
+                    // Create fallback
+                    const fallback = document.createElement('div');
+                    fallback.style.cssText = 'width: 100%; height: 100%; background: linear-gradient(135deg, #dc2626, #ef4444); color: white; display: flex; align-items: center; justify-content: center; text-align: center;';
+                    fallback.innerHTML = '<div><span class="material-symbols-outlined" style="font-size: 4rem; display: block; margin-bottom: 0.5rem;">description</span><p style="font-weight: 600; margin: 0;">Certificate</p></div>';
+                    this.parentNode.replaceChild(fallback, this);
+                };
+
+                imageContainer.appendChild(img);
+
+                // Create info container
+                const infoDiv = document.createElement('div');
+                infoDiv.style.cssText = 'padding: 1.5rem;';
+
+                const title = document.createElement('h3');
+                title.textContent = cert.name;
+                title.style.cssText = 'font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: #1f2937;';
+
+                const categoryTag = document.createElement('span');
+                categoryTag.textContent = cert.category;
+                categoryTag.style.cssText = 'display: inline-block; background-color: #2563eb; color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.875rem; font-weight: 500; margin-bottom: 1rem;';
+
+                const viewLink = document.createElement('a');
+                viewLink.href = imagePath;
+                viewLink.target = '_blank';
+                viewLink.innerHTML = '<span class="material-symbols-outlined">zoom_in</span> View Certificate';
+                viewLink.style.cssText = 'display: inline-flex; align-items: center; gap: 0.5rem; color: #2563eb; text-decoration: none; font-weight: 500;';
+
+                infoDiv.appendChild(title);
+                infoDiv.appendChild(categoryTag);
+                infoDiv.appendChild(document.createElement('br'));
+                infoDiv.appendChild(viewLink);
+
+                cardDiv.appendChild(imageContainer);
+                cardDiv.appendChild(infoDiv);
+
+                container.appendChild(cardDiv);
+            });
+
+            console.log('Certificates created with DOM manipulation:', filteredCerts.length, 'Base path:', basePath);
+        }, 100);
     }
 
     getCategories() {
@@ -182,7 +235,7 @@ class TypingAnimation {
 
     type() {
         const currentText = this.texts[this.textIndex];
-        
+
         if (this.isDeleting) {
             this.element.textContent = currentText.substring(0, this.charIndex - 1);
             this.charIndex--;
@@ -214,7 +267,7 @@ class TypingAnimation {
 function fixNavigationPaths() {
     const isSubPage = window.location.pathname.includes('/static/');
     const basePath = isSubPage ? '../' : '';
-    
+
     // Fix navigation links
     const navLinks = document.querySelectorAll('.navbar a[href]');
     navLinks.forEach(link => {
@@ -239,7 +292,7 @@ function fixNavigationPaths() {
             }
         }
     });
-    
+
     // Fix logo src
     const logo = document.querySelector('.navbar-logo');
     if (logo) {
@@ -254,7 +307,7 @@ function fixNavigationPaths() {
             }
         }
     }
-    
+
 
 }
 
@@ -262,10 +315,10 @@ function fixNavigationPaths() {
 function toggleMobileMenu() {
     const mobileMenu = document.getElementById('mobile-menu');
     const menuToggle = document.querySelector('.mobile-menu-toggle');
-    
+
     if (mobileMenu && menuToggle) {
         const isCurrentlyActive = mobileMenu.classList.contains('active');
-        
+
         if (isCurrentlyActive) {
             // Close the menu
             mobileMenu.classList.remove('active');
@@ -282,7 +335,7 @@ function toggleMobileMenu() {
 function closeMobileMenu() {
     const mobileMenu = document.getElementById('mobile-menu');
     const menuToggle = document.querySelector('.mobile-menu-toggle');
-    
+
     if (mobileMenu && menuToggle) {
         mobileMenu.classList.remove('active');
         menuToggle.classList.remove('active');
@@ -292,8 +345,57 @@ function closeMobileMenu() {
 // Make sure the function is globally accessible
 window.toggleMobileMenu = toggleMobileMenu;
 
+// Test function for certificate loading
+function testCertificateLoad() {
+    const isSubPage = window.location.pathname.includes('/static/');
+    const basePath = isSubPage ? '../' : '';
+    const testImage = `${basePath}assets/Certificates/01_Debate.jpg`;
+
+    console.log('Testing certificate load:', testImage);
+
+    const img = new Image();
+    img.onload = () => console.log('✅ Certificate test load successful');
+    img.onerror = () => console.log('❌ Certificate test load failed');
+    img.src = testImage;
+}
+
+// Make test function globally accessible
+window.testCertificateLoad = testCertificateLoad;
+
+// Manual certificate loading function
+function loadCertificatesManually() {
+    console.log('Manual certificate load triggered');
+
+    // Hide the button after clicking - multiple methods
+    const button = document.getElementById('mobile-load-button');
+    console.log('Button found:', !!button);
+
+    if (button) {
+        console.log('Hiding button...');
+        button.style.display = 'none !important';
+        button.style.visibility = 'hidden';
+        button.style.opacity = '0';
+        button.remove(); // Completely remove the button
+        console.log('Button hidden and removed');
+    }
+
+    // Load certificates
+    if (window.certificateGallery) {
+        window.certificateGallery.render('certificates-grid', 'all');
+    } else {
+        console.log('Certificate gallery not initialized, creating new instance');
+        window.certificateGallery = new CertificateGallery();
+        window.certificateGallery.render('certificates-grid', 'all');
+    }
+
+    console.log('Certificates loaded');
+}
+
+// Make manual load function globally accessible
+window.loadCertificatesManually = loadCertificatesManually;
+
 // Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Ensure mobile menu starts in closed state
     const mobileMenu = document.getElementById('mobile-menu');
     const menuToggle = document.querySelector('.mobile-menu-toggle');
@@ -301,34 +403,74 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileMenu.classList.remove('active');
         menuToggle.classList.remove('active');
     }
-    
+
     // Initialize theme manager
     window.themeManager = new ThemeManager();
-    
+
     // Initialize animation manager
     window.animationManager = new AnimationManager();
-    
+
     // Initialize certificate gallery if on certificates page
     if (document.getElementById('certificates-grid')) {
+        // Test certificate loading first
+        testCertificateLoad();
+
         window.certificateGallery = new CertificateGallery();
-        
-        // Add a small delay to ensure DOM is ready
-        setTimeout(() => {
-            window.certificateGallery.render('certificates-grid');
-        }, 100);
-        
+
+        // Detect mobile devices and add longer delay for better compatibility
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const delay = isMobile ? 500 : 100;
+
+        console.log('Initializing certificates, mobile:', isMobile, 'delay:', delay);
+
+        // Show mobile load button only on mobile devices
+        const mobileButton = document.getElementById('mobile-load-button');
+        if (mobileButton && isMobile) {
+            mobileButton.style.display = 'block';
+            console.log('Mobile load button shown');
+        }
+
+        // Only auto-load certificates on desktop, not mobile
+        if (!isMobile) {
+            const initialRender = () => {
+                console.log('Starting initial certificate render for desktop...');
+                const container = document.getElementById('certificates-grid');
+                console.log('Container found:', !!container);
+
+                if (container) {
+                    console.log('Container innerHTML before render:', container.innerHTML.length);
+                    window.certificateGallery.render('certificates-grid', 'all');
+
+                    setTimeout(() => {
+                        console.log('Container innerHTML after render:', container.innerHTML.length);
+                        const cards = container.querySelectorAll('.certificate-card');
+                        console.log('Certificate cards rendered:', cards.length);
+                    }, 200);
+                }
+            };
+
+            setTimeout(initialRender, delay);
+        } else {
+            console.log('Mobile device detected - certificates will only load when button is clicked');
+        }
+
+        // No automatic fallback for mobile - certificates only load when button is clicked
+
         // Setup category filters
         const filterButtons = document.querySelectorAll('.filter-btn');
         filterButtons.forEach(btn => {
             btn.addEventListener('click', () => {
+                console.log('Filter clicked:', btn.dataset.filter);
                 filterButtons.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 const filter = btn.dataset.filter;
                 window.certificateGallery.render('certificates-grid', filter);
             });
         });
+
+        // Mobile certificates will only load when the "Load Certificates" button is clicked
     }
-    
+
     // Initialize typing animation on home page
     const typingElement = document.querySelector('.typing-text');
     if (typingElement) {
@@ -339,29 +481,29 @@ document.addEventListener('DOMContentLoaded', function() {
             'Continuous Learner'
         ]);
     }
-    
+
     // Add click event listeners to mobile menu toggle
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     if (mobileMenuToggle) {
-        mobileMenuToggle.addEventListener('click', function(e) {
+        mobileMenuToggle.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
             toggleMobileMenu();
         });
     }
-    
+
     // Add click event listeners to mobile menu links
     const mobileMenuLinks = document.querySelectorAll('.mobile-menu .text_navbar a');
     mobileMenuLinks.forEach(link => {
         link.addEventListener('click', closeMobileMenu);
     });
-    
+
     // Close mobile menu when clicking outside
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         const mobileMenu = document.getElementById('mobile-menu');
         const menuToggle = document.querySelector('.mobile-menu-toggle');
         const navbar = document.querySelector('.navbar');
-        
+
         if (mobileMenu && menuToggle && navbar) {
             if (!navbar.contains(event.target) && mobileMenu.classList.contains('active')) {
                 closeMobileMenu();

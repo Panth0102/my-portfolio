@@ -20,15 +20,19 @@
             <a href="../index.html" class="navbar-brand">
                 <img src="../assets/icon/P.png" alt="Panth Sutaria Logo" class="navbar-logo">
             </a>
-            
+
             <!-- Center: Navigation Links -->
             <div class="navbar-nav">
-                <li class="text_navbar"><a href="../index.html">Home <span class="material-symbols-outlined">home</span></a></li>
-                <li class="text_navbar"><a href="../static/aboutme.html">About <span class="material-symbols-outlined">person</span></a></li>
-                <li class="text_navbar"><a href="../static/project.html">Projects <span class="material-symbols-outlined">work_history</span></a></li>
-                <li class="text_navbar"><a href="../static/certificates.html">Certificates <span class="material-symbols-outlined">license</span></a></li>
+                <li class="text_navbar"><a href="../index.html">Home <span
+                            class="material-symbols-outlined">home</span></a></li>
+                <li class="text_navbar"><a href="../static/aboutme.html">About <span
+                            class="material-symbols-outlined">person</span></a></li>
+                <li class="text_navbar"><a href="../static/project.html">Projects <span
+                            class="material-symbols-outlined">work_history</span></a></li>
+                <li class="text_navbar"><a href="../static/certificates.html">Certificates <span
+                            class="material-symbols-outlined">license</span></a></li>
             </div>
-            
+
             <!-- Right: Theme Toggle & Mobile Menu -->
             <div class="navbar-right">
                 <div class="toggle">
@@ -36,7 +40,7 @@
                         <span class="material-symbols-outlined theme-toggle">dark_mode</span>
                     </a>
                 </div>
-                
+
                 <!-- Mobile Menu Toggle -->
                 <div class="mobile-menu-toggle">
                     <span></span>
@@ -45,14 +49,18 @@
                 </div>
             </div>
         </nav>
-        
+
         <!-- Mobile Menu -->
         <div class="mobile-menu" id="mobile-menu">
             <div class="navbar-nav">
-                <li class="text_navbar"><a href="../index.html">Home <span class="material-symbols-outlined">home</span></a></li>
-                <li class="text_navbar"><a href="../static/aboutme.html">About <span class="material-symbols-outlined">person</span></a></li>
-                <li class="text_navbar"><a href="../static/project.html">Projects <span class="material-symbols-outlined">work_history</span></a></li>
-                <li class="text_navbar"><a href="../static/certificates.html">Certificates <span class="material-symbols-outlined">license</span></a></li>
+                <li class="text_navbar"><a href="../index.html">Home <span
+                            class="material-symbols-outlined">home</span></a></li>
+                <li class="text_navbar"><a href="../static/aboutme.html">About <span
+                            class="material-symbols-outlined">person</span></a></li>
+                <li class="text_navbar"><a href="../static/project.html">Projects <span
+                            class="material-symbols-outlined">work_history</span></a></li>
+                <li class="text_navbar"><a href="../static/certificates.html">Certificates <span
+                            class="material-symbols-outlined">license</span></a></li>
                 <li class="text_navbar">
                     <a href="#" onclick="window.themeManager?.toggle(); return false;">
                         Theme <span class="material-symbols-outlined theme-toggle">dark_mode</span>
@@ -116,6 +124,14 @@
                 <button class="filter-btn" data-filter="Professional">Professional</button>
                 <button class="filter-btn" data-filter="Event">Events</button>
                 <button class="filter-btn" data-filter="Social Service">Social Service</button>
+            </div>
+
+            <!-- Manual Load Button for Mobile Only -->
+            <div id="mobile-load-button" style="text-align: center; margin-bottom: 2rem; display: none;">
+                <button onclick="loadCertificatesManually()"
+                    style="background-color: var(--primary-color); color: white; border: none; padding: 1rem 2rem; border-radius: 0.5rem; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    Load Certificates
+                </button>
             </div>
 
             <!-- Certificate Grid -->
