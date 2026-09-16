@@ -13,7 +13,7 @@ A modern, responsive portfolio website showcasing my journey as a Full Stack Dev
 
 ## 🚀 Live Demo
 
-Visit the live website: panth0102.github.io/Panth0102/
+Visit the live website: [Portfolio Website](https://panth0102.github.io/my-portfolio/)
 
 ## 📁 Project Structure
 
